@@ -14,7 +14,7 @@
 ### Build
 - [x] UserX can register login and logout.
 
-- [] UserX can create test(s).
+- [ ] UserX can create test(s).
     - [] Test timer
     - [] Test window/deadline
 
