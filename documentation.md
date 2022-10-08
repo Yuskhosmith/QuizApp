@@ -15,28 +15,28 @@
 - [x] UserX can register login and logout.
 
 - [ ] UserX can create test(s).
-    - [] Test timer
-    - [] Test window/deadline
+    - [ ] Test timer
+    - [ ] Test window/deadline
 
-- [] UserX can share test to UserY.
-    - [] Copy Link
-    - [] Share to Twitter
-    - [] Share to WhatsApp
+- [ ] UserX can share test to UserY.
+    - [ ] Copy Link
+    - [ ] Share to Twitter
+    - [ ] Share to WhatsApp
 
-- [] UserY can input their name and class code to take test.
+- [ ] UserY can input their name and class code to take test.
 
-- [] UserY can take test.
+- [ ] UserY can take test.
 
-- [] UserY can see the summary of his test and his wrong and right answers. (Open issue - they can cheat)
+- [ ] UserY can see the summary of his test and his wrong and right answers. (Open issue - they can cheat)
 
-- [] UserX can see the summary of all the people that took the test
-    - [] The summary of each individual like UserY can see theirs
+- [ ] UserX can see the summary of all the people that took the test
+    - [ ] The summary of each individual like UserY can see theirs
 
-- [] UserX can delete test 
+- [ ] UserX can delete test 
 
 ----
 ### IDK 😏, Maybe or Maybe Not 🤡
 - UserX can set the allowed participants
-    - [] by manually putting their matric number
-    - [] by importing a csv file
-    - [] by using email.... sending exam code to each email.
+    - [ ] by manually putting their matric number
+    - [ ] by importing a csv file
+    - [ ] by using email.... sending exam code to each email.
