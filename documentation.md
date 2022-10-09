@@ -14,7 +14,9 @@
 ### Build
 - [x] UserX can register login and logout.
 
-- [ ] UserX can create test(s).
+- [x] UserX can create test(s).
+    - [ ] Add questions to test
+    - [ ] Remove questions from test
     - [ ] Test timer
     - [ ] Test window/deadline
 
@@ -36,7 +38,7 @@
 
 ----
 ### IDK 😏, Maybe or Maybe Not 🤡
-- UserX can set the allowed participants
+- [ ] UserX can set the allowed participants
     - [ ] by manually putting their matric number
     - [ ] by importing a csv file
     - [ ] by using email.... sending exam code to each email.

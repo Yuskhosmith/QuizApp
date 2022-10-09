@@ -1,12 +1,16 @@
 {% extends "quizapp/layout.html" %}
 
 {% block body %}
-<h1>Hello World</h1>
-
-<p>The Code:</p>
-<code><h1>print("Hello World")</h1></code>
-<code><h2>print("Hello Yusuf")</h2></code>
-
+    {% for test in tests %}
+        <div>
+            <a href="{% url 'test' test.id%}">
+                <h3>{{test.title}}</h3>
+                <h3>{{test.duration}} minutes</h3>
+                <h3>{{test.number_of_questions}} questions</h3>
+                <p>{{test.description}}</p>
+            </a>
+        </div>
+    {% endfor %}
 <h3><strong><a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Sign Up</a></h3></strong></h3>
 
 {% endblock %}

@@ -1,0 +1,12 @@
+{% extends "quizapp/layout.html" %}
+
+{% block body %}
+    <h2>Tests/Quiz</h2>
+    <div>
+        <h3>{{test.title}}</h3>
+        <h3>{{test.duration}} minutes</h3>
+        <h3>{{test.number_of_questions}} questions</h3>
+        <p>{{test.description}}</p>
+    </div>
+    Create 
+{% endblock %}
