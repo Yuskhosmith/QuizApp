@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db import IntegrityError
-from .models import User, Quiz
+from .models import Question, User, Quiz, Answer
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -12,7 +12,7 @@ from django.conf import settings
 def index(request):
 
     return render(request, "quizapp/index.html", {
-        'tests': Quiz.objects.all()
+        'tests': Quiz.objects.filter(user=request.user.id)
     })
 
 def login_view(request):
@@ -116,7 +116,43 @@ def createtest(request):
 
 @login_required(login_url='/login')
 def tests(request, test_id):
-    
-    return render(request, "quizapp/test.html", {
-        "test": Quiz.objects.get(id=test_id),
-    })
+    quiz = Quiz.objects.get(id=test_id)
+    availableQuestions = len(Question.objects.filter(quiz=quiz))
+    quizquestionsAr=[]
+    quizquestions = quiz.number_of_questions
+
+    if availableQuestions == 0:
+        for i in range(1, quizquestions+1, 1):
+            quizquestionsAr.append(i)
+    else:
+        print(availableQuestions)
+        print(quizquestions)
+        print(quizquestionsAr)
+
+    if request.method == "POST":
+        try:
+            question = request.POST["question"]
+            option_a = request.POST["option_a"]
+            option_b = request.POST["option_b"]
+            option_c = request.POST["option_c"]
+            option_d = request.POST["option_d"]
+
+            qstn = Question.objects.create(quiz=quiz, question=question, option_a=option_a, option_b=option_b, option_c=option_c, option_d=option_d)
+            qstn.save()
+        except ValueError:
+            return render(request, "quizapp/test.html", {
+                "test": Quiz.objects.get(id=test_id),
+            })
+        answer = request.POST["answer"]
+        qstnAns = Answer.objects.create(question=qstn, answer=answer)
+        qstnAns.save()
+        
+        
+        return render(request, "quizapp/test.html", {
+            "test": quiz,
+        })
+    else:
+        return render(request, "quizapp/test.html", {
+            "test": quiz,
+            "numOfQ": quizquestionsAr
+        })

@@ -8,8 +8,8 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("createtest", views.createtest, name="createtest"),
-    path("tests", views.tests, name="tests"),
-    path("test/<int:test_id>", views.tests, name="test"),
+    path("tests", views.index, name="index"),
+    path("tests/<int:test_id>", views.tests, name="tests"),
     # path('addQuestion/', addQuestion,name='addQuestion'),
  
 ]

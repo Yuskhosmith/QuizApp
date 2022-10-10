@@ -1,15 +1,17 @@
-{% load static %}
-<!-- When refrencing anything in the static file you'll do href="{% static 'folder/item_name' %}" -->
 <!-- Download bootstarp and add to static folder to avoid stories that touch -->
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}QuizApp{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'quizapp/css/style.css' %}">
+        <script type="application/javascript"" src="{% static 'quizapp/js/script.js' %}"></script>
     </head>
+
     <body>
         <h1>QuizApp</h1>
         <div>
@@ -42,7 +44,7 @@
         <hr>
         {% block body %}
         {% endblock %}
-        
+        {% block script %}{%endblock%}
     </body>
     
 </html>

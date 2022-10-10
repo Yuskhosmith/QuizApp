@@ -3,7 +3,7 @@
 {% block body %}
     {% for test in tests %}
         <div>
-            <a href="{% url 'test' test.id%}">
+            <a href="{% url 'tests' test.id%}">
                 <h3>{{test.title}}</h3>
                 <h3>{{test.duration}} minutes</h3>
                 <h3>{{test.number_of_questions}} questions</h3>

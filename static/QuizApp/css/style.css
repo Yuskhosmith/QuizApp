@@ -8,3 +8,9 @@ html {
 /* body{
   background-color: black;
 } */
+
+.add-q-btn{
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}

@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'quizapp\static')
+    os.path.join(BASE_DIR, 'static')
 ]
 
 # Default primary key field type
