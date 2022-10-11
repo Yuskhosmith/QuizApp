@@ -2,10 +2,14 @@
 {% load static %}
 
 {% block body %}
+    
     <form action="{% url 'takequiz' %}" method="post">
         {% csrf_token %}
-        <input type="number" name="quizid" placeholder="Quiz ID" required>
-        <input type="text" name="quiztaker" placeholder="Your ID" max="20" required>
-        <input type="submit" value="Start">
+        <div class="quiz">
+            <input type="number" name="quizid" placeholder="Quiz ID" required>
+            <input type="text" name="quiztaker" placeholder="Your ID" max="20" required>
+            <input class="btn-submit" type="submit" value="Start">
+        </div>
     </form>
+
 {% endblock %}

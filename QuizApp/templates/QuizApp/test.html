@@ -5,13 +5,13 @@
     <h2>Tests/Quiz</h2>
     <div>
         <h3>{{test.title}}</h3>
-        <h3>Test ID: {{test.id}}</h3>
-        <h4>{{noq}} questions</h4>
+        <h4>Test ID: {{test.id}} | {{noq}} questions</h4>
         <p>{{test.description}}</p>
 
     </div>
-    <form action="{% url 'delete' test.id %}">
-        <input type="submit" value="Delete Test">
+    <form action="{% url 'delete' test.id %}" method="post">
+        {%csrf_token%}
+        <input class="del" type="submit" value="Delete Test">
     </form>
     
     <form action="{% url 'tests' test.id %}" method="post">
@@ -31,32 +31,37 @@
                 <option value="d">D</option>
                 </select>
             </div>
-        <input class="btn btn-primary" type="submit" value="Add Question">
+        <input class="btn-submit" type="submit" value="Add Question">
     </form>
 
-    <h3>Questions</h3>
-    <ol>
-        {% for question in questions%}
-            <li>{{question.question}}</li>
-            <ul>
-                <li>{{question.option_a}}</li>
-                <li>{{question.option_b}}</li>
-                <li>{{question.option_c}}</li>
-                <li>{{question.option_d}}</li>
-            </ul>
-            <span>Answer: {{question.answer}}</span>
-        {% endfor %}
-    </ol>
-
-    <h3>Summary</h3>
-    <ol>
-        {% for responder in responders %}
-            <li>{{responder.responder}}</li>
-            <span>{{responder.score}}/{{noq}}</span>
-            <span>{{x}}</span>
-            <span>{{y}}</span>
-        {% endfor %}
-    </ol>
+    <div class="item-container">
+        <div class="q">
+            <h3>Questions</h3>
+            <ol>
+                {% for question in questions%}
+                    <li>{{question.question}}</li>
+                    <ul>
+                        <li>{{question.option_a}}</li>
+                        <li>{{question.option_b}}</li>
+                        <li>{{question.option_c}}</li>
+                        <li>{{question.option_d}}</li>
+                    </ul>
+                    <span>Answer: {{question.answer}}</span>
+                {% endfor %}
+            </ol>
+        </div>
+        <div class="q">
+            <h3>Summary</h3>
+            <ol>
+                {% for responder in responders %}
+                    <li>{{responder.responder}}</li>
+                    <span>{{responder.score}}/{{noq}}</span>
+                    <span>{{x}}</span>
+                    <span>{{y}}</span>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
 
 
 

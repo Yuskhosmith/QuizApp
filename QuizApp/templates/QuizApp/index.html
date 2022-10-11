@@ -1,16 +1,17 @@
 {% extends "quizapp/layout.html" %}
 
 {% block body %}
+    <h2>Tests</h2>
+    <div class="item-container">
     {% for test in tests %}
-        <div>
+        <div class="item">
             <a href="{% url 'tests' test.id%}">
                 <h3>{{test.title}}</h3>
-                <h3>{{test.duration}} minutes</h3>
-                <h3>{{test.number_of_questions}} questions</h3>
                 <p>{{test.description}}</p>
             </a>
         </div>
     {% endfor %}
-<h3><strong><a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Sign Up</a></h3></strong></h3>
+    </div>
+
 
 {% endblock %}

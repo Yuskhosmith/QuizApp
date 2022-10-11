@@ -6,42 +6,42 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}QuizApp{% endblock %}</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'quizapp/css/style.css' %}">
         <script type="application/javascript"" src="{% static 'quizapp/js/script.js' %}"></script>
     </head>
 
     <body>
-        <h1>QuizApp</h1>
+        <nav class="flex-container">
+            <h1><a class="quizapplogo" href="{% url 'index' %}">QuizApp</a></h1>
+            <ul class="nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Tests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'createtest' %}" class="nav-link">Create Test</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
         <div>
             {% if user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
             {% else %}
-                Not signed in.
+                <p class="intro">This is a quiz app that allows you to set quiz and share with others.<span> Login/Create Account to start</span></p>
             {% endif %}
         </div>
-        <ul class="nav">
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Tests</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'createtest' %}" class="nav-link">Create Test</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
-                </li>
-            {% endif %}
-        </ul>
-        <hr>
         {% block body %}
         {% endblock %}
         {% block script %}{%endblock%}
