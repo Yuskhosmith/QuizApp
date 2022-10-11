@@ -1,9 +1,10 @@
+from turtle import title
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db import IntegrityError
-from .models import Question, User, Quiz, Answer
+from .models import Question, Respondance, User, Quiz, Answer
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -75,28 +76,39 @@ def register(request):
         return render(request, "quizapp/register.html")
 
 @login_required(login_url='/login')
+def delete(request, test_id):
+    if request.method == "POST":        
+        test = Quiz.objects.get(id=test_id)
+        user = User.objects.get(id=request.user.id)
+        item = Quiz.objects.filter(user=user, title=test.title)
+        item.delete()
+        return render(request, "quizapp/deleted.html", {
+            "test": test
+        })
+    return HttpResponseRedirect("/tests/" + str(test_id))
+    
+
+@login_required(login_url='/login')
 def createtest(request):
     if request.method == "POST":
         try:
             user = User.objects.get(id=request.user.id)
             title = request.POST["title"]
             description = request.POST["description"]
-            number_of_questions = request.POST["number_of_questions"]
-            duration = request.POST["duration"]
 
             # Ensuring all items are filled
-            items = [title, description, number_of_questions, duration]
+            items = [title, description]
             for i in items:
                 if len(i) < 1:
                     break #Implement in Js and remove it here
 
             # Attempt to create new test
             try:
-                test = Quiz.objects.create(user=user, title=title, description=description, number_of_questions=number_of_questions, duration=duration)
+                test = Quiz.objects.create(user=user, title=title, description=description)
                 test.save()
-                saved_test = Quiz.objects.filter(user=user, title=title, description=description, number_of_questions=number_of_questions, duration=duration).first()
+                saved_test = Quiz.objects.filter(user=user, title=title, description=description).first()
                 
-                return HttpResponseRedirect("/tests/" + saved_test.id) 
+                return HttpResponseRedirect("/tests/" + str(saved_test.id)) 
                 """render(request, "quizapp/test.html", {
                     'x': saved_test,
                     'y': saved_test.id,
@@ -118,17 +130,9 @@ def createtest(request):
 def tests(request, test_id):
     quiz = Quiz.objects.get(id=test_id)
     availableQuestions = len(Question.objects.filter(quiz=quiz))
-    quizquestionsAr=[]
-    quizquestions = quiz.number_of_questions
+    
 
-    if availableQuestions == 0:
-        for i in range(1, quizquestions+1, 1):
-            quizquestionsAr.append(i)
-    else:
-        print(availableQuestions)
-        print(quizquestions)
-        print(quizquestionsAr)
-
+    # Submit question for quiz
     if request.method == "POST":
         try:
             question = request.POST["question"]
@@ -147,12 +151,60 @@ def tests(request, test_id):
         qstnAns = Answer.objects.create(question=qstn, answer=answer)
         qstnAns.save()
         
-        
-        return render(request, "quizapp/test.html", {
-            "test": quiz,
-        })
+        return HttpResponseRedirect("/tests/" + str(test_id))
     else:
+        questions = Question.objects.filter(quiz=quiz)
+        responders = Respondance.objects.filter(quiz=quiz)
+        
+               
         return render(request, "quizapp/test.html", {
+            "questions": questions,
             "test": quiz,
-            "numOfQ": quizquestionsAr
+            "noq": availableQuestions,
+            "responders": responders,
+
         })
+
+def takequiz(request):
+    if request.method == "POST":
+        try:
+            quizid = request.POST["quizid"]
+            quiztaker = request.POST["quiztaker"]
+            quiz = Quiz.objects.get(id=quizid)
+        except ValueError:
+            return render(request, "quizapp/takequiz.html", {
+                "message": "Ensure you input the correct Test ID"
+            })
+        return render(request, "quizapp/quiz.html", {
+            "quizid": quizid,
+            "quiztaker": quiztaker,
+            "questions": Question.objects.filter(quiz=quiz),
+            
+        })
+    return render(request, "quizapp/takequiz.html")
+
+
+def submit(request):
+    if request.method == "POST":
+        try:
+            quizid = request.POST["quizid"]
+            quiztaker = request.POST["quiztaker"]
+            quiz = Quiz.objects.get(id=quizid)
+            questions = Question.objects.filter(quiz=quiz)
+            score = 0
+            for question in questions:
+                sol = request.POST[f"{question.id}"]
+                rsol = question.answer
+                if str(sol) == str(rsol):
+                    score += 1
+                    print(sol, rsol, score)
+            respondance = Respondance.objects.create(quiz=quiz, responder=quiztaker, score=score)
+            respondance.save()
+        except:
+            return HttpResponseRedirect("/takequiz/")
+        return render(request, "quizapp/complete.html", {
+            "name": quiztaker,
+
+        })
+                
+    return HttpResponseRedirect("/takequiz/")

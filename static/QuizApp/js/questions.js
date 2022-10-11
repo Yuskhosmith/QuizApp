@@ -11,6 +11,17 @@ function showQTemp(){
     addQuestionBtn.classList.add('add-q-btn')
 }
 
+function shareTwitter(){
+    console.log('share to Twitter')
+}
+function shareWhatsapp(){
+    console.log('Share to whatsapp')
+}
+function copyLink(){
+    var copyLink = document.getElementById("link");
+    console.log('copylink')
+}
+
 
 function QTemp(questionNumber){
     // Question

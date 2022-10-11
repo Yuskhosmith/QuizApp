@@ -15,29 +15,30 @@
 - [x] UserX can register login and logout.
 
 - [x] UserX can create test(s).
-    - [ ] Add questions to test
+    - [x] Add questions to test
     - [ ] Remove questions from test
     - [ ] Test timer
     - [ ] Test window/deadline
 
-- [ ] UserX can share test to UserY.
-    - [ ] Copy Link
-    - [ ] Share to Twitter
-    - [ ] Share to WhatsApp
 
-- [ ] UserY can input their name and class code to take test.
 
-- [ ] UserY can take test.
+- [x] UserY can input their name and test id to take test.
 
-- [ ] UserY can see the summary of his test and his wrong and right answers. (Open issue - they can cheat)
+- [x] UserY can take test.
 
-- [ ] UserX can see the summary of all the people that took the test
+- [x] UserY can see the summary of his test and his wrong and right answers. (Open issue - they can cheat)
+
+- [x] UserX can see the summary of all the people that took the test
     - [ ] The summary of each individual like UserY can see theirs
 
 - [ ] UserX can delete test 
 
 ----
 ### IDK 😏, Maybe or Maybe Not 🤡
+- [ ] UserX can share test to UserY.
+    - [ ] Copy Link
+    - [ ] Share to Twitter
+    - [ ] Share to WhatsApp
 - [ ] UserX can set the allowed participants
     - [ ] by manually putting their matric number
     - [ ] by importing a csv file

@@ -1,0 +1,30 @@
+{% extends "quizapp/layout.html" %}
+{% load static %}
+
+{% block body %}
+    {%if message%}
+        <p>{{message}}</p>
+    {%endif%}
+    <h3>Quiz ID: {{quizid}}</h3>
+    <h3>Your ID: {{quiztaker}}</h3>
+    <form action="{% url 'submit' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="quizid" value="{{quizid}}">
+        <input type="hidden" name="quiztaker" value="{{quiztaker}}">
+        <ol>
+            {% for question in questions %}
+                <li>{{question.question}}</li>
+                <input type="radio" id="{{question.id}}a" name="{{question.id}}" value="a">
+                <label for="{{question.id}}a">{{question.option_a}}</label><br>
+                <input type="radio" id="{{question.id}}b" name="{{question.id}}" value="b">
+                <label for="{{question.id}}b">{{question.option_b}}</label><br>
+                <input type="radio" id="{{question.id}}c" name="{{question.id}}" value="c">
+                <label for="{{question.id}}c">{{question.option_c}}</label><br>
+                <input type="radio" id="{{question.id}}d" name="{{question.id}}" value="d">
+                <label for="{{question.id}}d">{{question.option_d}}</label><br>
+            {% endfor %}
+        </ol>
+        
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

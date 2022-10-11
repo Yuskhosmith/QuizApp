@@ -5,16 +5,18 @@
     <h2>Tests/Quiz</h2>
     <div>
         <h3>{{test.title}}</h3>
-        <h3>{{test.duration}} minutes</h3>
-        <h3><span id="number-of-questions">{{test.number_of_questions}}</span> questions</h3>
-        <h3><span id="number-of-questions">{{savedQCount}}</span> questions saved</h3>
+        <h3>Test ID: {{test.id}}</h3>
+        <h4>{{noq}} questions</h4>
         <p>{{test.description}}</p>
+
     </div>
-    <button type="button" id="add-question" onclick="showQTemp()">Add Questions</button>
+    <form action="{% url 'delete' test.id %}">
+        <input type="submit" value="Delete Test">
+    </form>
+    
     <form action="{% url 'tests' test.id %}" method="post">
         {% csrf_token %}
-        {% for i in numOfQ %}
-            <div id ="test-questions" class="test-question">
+            <div id ="test-question-input" class="test-question-input">
                 <input type="text" name="question" id="" placeholder="Question" required>
                 <input type="text" name="option_a" id="" placeholder="Option A">
                 <input type="text" name="option_b" id="" placeholder="Option B">
@@ -28,13 +30,35 @@
                 <option value="c">C</option>
                 <option value="d">D</option>
                 </select>
-        {% endfor %}
-        {% if numOfQ%}
-            <input class="btn btn-primary" type="submit" value="Next">
-        {% endif %}
-        </div>
+            </div>
+        <input class="btn btn-primary" type="submit" value="Add Question">
     </form>
+
     <h3>Questions</h3>
+    <ol>
+        {% for question in questions%}
+            <li>{{question.question}}</li>
+            <ul>
+                <li>{{question.option_a}}</li>
+                <li>{{question.option_b}}</li>
+                <li>{{question.option_c}}</li>
+                <li>{{question.option_d}}</li>
+            </ul>
+            <span>Answer: {{question.answer}}</span>
+        {% endfor %}
+    </ol>
+
+    <h3>Summary</h3>
+    <ol>
+        {% for responder in responders %}
+            <li>{{responder.responder}}</li>
+            <span>{{responder.score}}/{{noq}}</span>
+            <span>{{x}}</span>
+            <span>{{y}}</span>
+        {% endfor %}
+    </ol>
+
+
 
 {% endblock %}
 {% block script%}

@@ -1,4 +1,6 @@
 from email.policy import default
+from pyexpat import model
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -10,8 +12,6 @@ class Quiz(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)
-    number_of_questions = models.IntegerField(default=1)
-    duration = models.IntegerField(help_text="Duration in seconds", default=60)
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -26,4 +26,10 @@ class Answer(models.Model):
     answer = models.CharField(max_length=1)
 
     def __str__(self):
-        return f"{self.question.question} \nA. {self.question.option_a}\nB. {self.question.option_b}\nC. {self.question.option_c}\nD. {self.question.option_d}\n Answer: {self.answer}"
+        return f"{self.answer}" #"{self.question.question} \nA. {self.question.option_a}\nB. {self.question.option_b}\nC. {self.question.option_c}\nD. {self.question.option_d}\n Answer: {self.answer}"
+
+class Respondance(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    responder = models.CharField(max_length=20)
+    score = models.IntegerField()
+
