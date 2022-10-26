@@ -1,23 +1,34 @@
 {% extends "quizapp/layout.html" %}
 
 {% block body %}
-    {% if user.is_authenticated %}
-        {% if message %}
-            <li>{{message}}</li>
-        {% endif %}
-        <h3>Create Quiz</h3>
-        <form action="{% url 'createtest' %}" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <input autofocus class="form-control" type="text" name="title" placeholder="Quiz Title">
-            </div>
-            <div class="form-group">
-                <input autofocus class="form-control" type="text" name="description" placeholder="Test Description">
-            </div>
-            <input class="btn-submit" type="submit" value="Create">
+<div class="login">
+    <p class="sup supp">{{user}}🤝🏾.</p>
+    <h2>Create Quiz</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <div class="login-form-container">
+        <div class="avoid-height">
+            <form class="form login-form" action="{% url 'createtest' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="title" placeholder="Quiz Title">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="description" placeholder="Test Description" cols="30" rows="10"></textarea>
+                </div>
+
+                <input class="btn-submit" type="submit" value="Create">
+            </form>
+        </div>
+    </div>
+
+  
+            
 
         </form>
 
-    {% endif %}
 
 {% endblock %}

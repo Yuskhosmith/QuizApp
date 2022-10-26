@@ -1,15 +1,35 @@
 {% extends "quizapp/layout.html" %}
-{% load static %}
+
+{% block nav %}
+    <div class="nav-item button-signup">
+        <a href="{% url 'register' %}">Sign up</a>
+    </div>
+{% endblock %}
 
 {% block body %}
+    <div class="login">
+        <p class="sup">Take Quiz</p>
+        <p class="sub">Goodluck comrade 🤝🏾🤡</p>
+
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <div class="login-form-container">
+            <div class="avoid-height">
     
-    <form action="{% url 'takequiz' %}" method="post">
-        {% csrf_token %}
-        <div class="quiz">
-            <input type="number" name="quizid" placeholder="Quiz ID" required>
-            <input type="text" name="quiztaker" placeholder="Your ID" max="20" required>
-            <input class="btn-submit" type="submit" value="Start">
+                <form action="{% url 'takequiz' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input autofocus class="form-control" type="number" name="quizid" placeholder="Quiz ID" required>
+                    </div>
+                    <div class="form-group">
+                        <input autofocus class="form-control" type="text" name="quiztaker" placeholder="Your ID" max="20" required>
+                    </div>
+                    <input class="btn-submit" type="submit" value="Start">
+                </form>
+            </div>
         </div>
-    </form>
+    </div>
 
 {% endblock %}

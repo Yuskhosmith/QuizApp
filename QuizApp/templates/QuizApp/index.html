@@ -1,17 +1,22 @@
 {% extends "quizapp/layout.html" %}
 
 {% block body %}
-    <h2>Tests</h2>
-    <div class="item-container">
-    {% for test in tests %}
-        <div class="item">
-            <a href="{% url 'tests' test.id%}">
-                <h3>{{test.title}}</h3>
-                <p>{{test.description}}</p>
-            </a>
+    {% if tests %}
+        <p class="h1">Welcome back, <span>{{user}} 🤝🏾.</span></p>
+        <p class="h1f">Here are your already created tests</p>
+        <div class="item-container">
+            {% for test in tests %}
+                <div class="item">
+                    <h3>{{test.title}}</h3>
+                    <p>{{test.description}}</p>
+                    <a href="{% url 'tests' test.id%}">View Questions>></a>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-    </div>
+    {% else %}
+        <p class="h1">Welcome, <span>{{user}} 🤝🏾.</span></p>
+        <p class="h1nf">You haven't created any tests</p>
+    {% endif %}
 
 
 {% endblock %}

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizApp</title>
+</head>
+<body>
+    {% load static %}
+    
+    <nav class="nav-container">
+        <h3 class="quizapp">QuizApp</h3>
+        <div class="nav-nav">
+            <div class="nav-item button-take-test"><a href="{% url 'takequiz' %}">Take Test</a></div>
+            <div class="nav-item button-login"><a href="{% url 'login' %}">Log in</a></div>
+            <div class="nav-item button-signup"><a href="{% url 'register' %}">Sign up</a></div>
+        </div>
+
+    </nav>
+    <div class="body">
+        <header class="header">
+            <div class="header-left">
+                <p class="q">A <span>Quiz</span> App</p>
+                <p class="qq">A clean and simple interface to organize your quiz and its summary. Try it for free.</p>
+                <div class="button-container">
+                    <div class="nav-item button-login bl">
+                        <a href="{% url 'login' %}">Log in</a>
+                    </div>
+                    <div class="nav-item button-take-test bt">
+                        <a href="{% url 'login' %}">Taketest</a>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="{% static 'quizapp/img/1.svg' %}" alt="Test">
+            </div>
+        </header>
+        <!-- Features -->
+        <h3>Features</h3>
+        <p class="aim">My aim is to make it quick and easy for you to create and take test. The summary of your test is available to you whenever you need it.</p>
+        <div class="feature1">
+            <div class="feature1-left">
+                <img class="feature-image" src="{% static 'quizapp/img/2.svg' %}" alt="Create Test">
+            </div>
+            <div class="feature1-right">
+                <h4>Create test in one click</h4>
+                <p>Organize your tests however you like. Our simple add-question page gives you complete control over how you set your questions. You can add questions to your test and update them later.</p>
+                <div class="nav-item button-login bl">
+                    <a href="{% url 'login' %}">Log in</a>
+                </div>
+            </div>
+        </div>
+        <div class="feature2">
+            <div class="feature2-left">
+                <h4>Take test easily</h4>
+                <p>You can easily take tests by inputing the test id and your id, - as specified by the test organiser - it can be anything from name, to matric number.</p>
+                <div class="nav-item button-take-test bt">
+                    <a href="{% url 'login' %}">Taketest</a>
+                </div>
+            </div>
+            <div class="feature2-right">
+                <img class="feature-image" src="{% static 'quizapp/img/2.svg' %}" alt="Take Test">
+            </div>
+        </div>
+        <div class="feature3">
+            <div class="feature3-left">
+                <img class="feature-image" src="{% static 'quizapp/img/2.svg' %}" alt="Create Test">
+            </div>
+            <div class="feature3-right">
+                <h4>Test Summary</h4>
+                <p>Your test summary is available in real time, it shows you the test-takers id and their score. It is available on the test page.</p>
+                <div class="nav-item button-login bl">
+                    <a href="{% url 'login' %}">Log in</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <span>&#169; Yuskhosmith </span>
+        </footer>
+    </div>
+</body>
+
+<style>
+    body{
+        width: 88.75vw;
+        margin: auto;
+        background-color: #fff;
+        color: #000;
+        font-family: "Poppins";
+        overflow-x: hidden;
+    }
+    .quizapp{
+        font-weight: 600;
+        font-size: 32px;
+        line-height: 48px;
+        color: #5267D4;
+        /* margin-right: 53%; */
+    }
+    .nav-container {
+        display: flex;
+    }
+    .nav-nav{
+        display: flex;
+        justify-content: flex-end;
+        align-content: flex-end;
+        align-self: flex-end;
+        align-items: right;
+        margin-left: auto;
+    }
+    .nav-item a{
+        text-decoration: none;
+        color: #fff;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        
+    }
+    .nav-item{
+        margin: 16px;
+        /* padding: 5px; */
+        border-radius: 5px;
+        /* text-align: right; */
+        
+    }
+    .button-take-test{
+        background-color: #fff;
+        outline: #5267D4 2px solid;
+        width: 176px;
+        height: 49px;
+    }
+    .button-take-test > a{
+        color: #5267D4;
+        text-align: center;
+        display: block;
+        margin-top: 14px;
+    }
+    .button-login{
+        background-color: #5267D4;
+        outline: none;
+        width: 80px;
+        height: 49px;
+    }
+    .button-login a{
+        color: #fff;
+        text-align: center;
+        display: block;
+        margin-top: 14px;
+    }
+    .button-signup{
+        background-color: #000;
+        outline: none;
+        width: 80px;
+        height: 49px;
+    }
+    .button-signup > a{
+        color: #fff;
+        text-align: center;
+        display: block;
+        margin-top: 14px;
+    }
+    .bl,
+    .bt{
+        display: inline-block;
+    }
+    .body{
+        width: 73.75vw;
+        margin: auto;
+    }
+    .q{
+        width: 263px;
+        height: 72px;
+        font-size: 48px;
+        font-weight: 600;
+        line-height: 72px;
+    }
+    .q span{
+        color: #5267D4;
+    }
+    .qq{
+        width: 464px;
+        height: 144px;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 48px;
+    }
+    .button-container{
+        margin-top: 48px;
+    }
+    .header-right img{
+        width: 368px;
+        height: 311px;
+        margin: 16px;
+    }
+    .header{
+        display: flex;
+        justify-content: space-around;
+        /* justify-content: space-between; */
+    }
+    h3{
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 42px;
+        color: #5267D4;
+        text-align: center;
+    }
+    .aim{
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+    }
+    .feature-image{
+        width: 272px;
+        height: 272px;
+    }
+    h4{
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 36px;
+        color: #5267D4;
+    }
+    .feature1 p,
+    .feature2 p,
+    .feature3 p{
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .feature1,
+    .feature2,
+    .feature3{
+        display: flex;
+        justify-content: space-around;
+    }
+    .feature1-right,
+    .feature2-left,
+    .feature3-right{
+        width: 464px;
+        height: 72px;
+    }
+    footer{
+        color: #5267D4;
+        font-weight: 500;
+        font-size: 24px;
+        text-align: center;
+
+    }
+</style>
+</html>

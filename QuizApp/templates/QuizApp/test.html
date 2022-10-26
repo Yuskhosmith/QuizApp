@@ -1,69 +1,74 @@
 {% extends "quizapp/layout.html" %}
-{% load static %}
-
+{%load static%}
 {% block body %}
-    <h2>Tests/Quiz</h2>
-    <div>
-        <h3>{{test.title}}</h3>
-        <h4>Test ID: {{test.id}} | {{noq}} questions</h4>
-        <p>{{test.description}}</p>
-
+    <p class="s1">Logged in as, <span>{{user}}</span></p>
+    <p class="title">{{test.title}}</p>
+    <p class="s1">Test ID: <span>{{test.id}}</span></p>
+    <div class="flexme">
+        <div>
+            <p class="s2">{{noq}} questions</p>
+            <p class="s3">{{test.description}}</p>
+        </div>
+        <form action="{% url 'delete' test.id %}" method="post">
+            {%csrf_token%}
+            <input class="del" type="submit" value="Delete Test">
+        </form>
     </div>
-    <form action="{% url 'delete' test.id %}" method="post">
-        {%csrf_token%}
-        <input class="del" type="submit" value="Delete Test">
-    </form>
-    
-    <form action="{% url 'tests' test.id %}" method="post">
-        {% csrf_token %}
-            <div id ="test-question-input" class="test-question-input">
-                <input type="text" name="question" id="" placeholder="Question" required>
-                <input type="text" name="option_a" id="" placeholder="Option A">
-                <input type="text" name="option_b" id="" placeholder="Option B">
-                <input type="text" name="option_c" id="" placeholder="Option C">
-                <input type="text" name="option_d" id="" placeholder="Option D">
-                <label for="answer">Answer</label>
 
-                <select id="answer" name="answer" required>
-                <option value="a">A</option>
-                <option value="b">B</option>
-                <option value="c">C</option>
-                <option value="d">D</option>
-                </select>
-            </div>
-        <input class="btn-submit" type="submit" value="Add Question">
-    </form>
-
-    <div class="item-container">
-        <div class="q">
+    <div class="flexme">
+        <div class="flexme-left">
             <h3>Questions</h3>
             <ol>
                 {% for question in questions%}
                     <li>{{question.question}}</li>
                     <ul>
-                        <li>{{question.option_a}}</li>
-                        <li>{{question.option_b}}</li>
-                        <li>{{question.option_c}}</li>
-                        <li>{{question.option_d}}</li>
+                        <li>a. {{question.option_a}}</li>
+                        <li>b. {{question.option_b}}</li>
+                        <li>c. {{question.option_c}}</li>
+                        <li>d. {{question.option_d}}</li>
                     </ul>
                     <span>Answer: {{question.answer}}</span>
                 {% endfor %}
             </ol>
         </div>
-        <div class="q">
-            <h3>Summary</h3>
-            <ol>
-                {% for responder in responders %}
-                    <li>{{responder.responder}}</li>
-                    <span>{{responder.score}}/{{noq}}</span>
-                    <span>{{x}}</span>
-                    <span>{{y}}</span>
-                {% endfor %}
-            </ol>
+        <div class="flexme-right">
+            <div class="right-top">
+                <form action="{% url 'tests' test.id %}" method="post">
+                    {% csrf_token %}
+                    <h3>Add Question</h3>
+                    <div id ="test-question-input" class="test-question-input">
+                            <input type="text" name="question" id="" placeholder="Question" required>
+                            <input type="text" name="option_a" id="" placeholder="Option A">
+                            <input type="text" name="option_b" id="" placeholder="Option B">
+                            <input type="text" name="option_c" id="" placeholder="Option C">
+                            <input type="text" name="option_d" id="" placeholder="Option D">
+                            <label for="answer">Answer</label>
+            
+                            <select id="answer" name="answer" required>
+                            <option value="a">A</option>
+                            <option value="b">B</option>
+                            <option value="c">C</option>
+                            <option value="d">D</option>
+                            </select>
+                    </div>
+                    <input class="btn" type="submit" value="Add Question">
+                </form>
+            </div>
+            <div class="right-bottom">
+                <h3>Summary</h3>
+                <ol>
+                    {% for responder in responders %}
+                        <li>{{responder.responder}}</li>
+                        <span>{{responder.score}}/{{noq}}</span>
+                        <span>{{x}}</span>
+                        <span>{{y}}</span>
+                    {% endfor %}
+                </ol>
+            </div>
+
         </div>
+        
     </div>
-
-
 
 {% endblock %}
 {% block script%}

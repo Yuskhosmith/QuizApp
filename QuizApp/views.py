@@ -1,4 +1,4 @@
-from turtle import title
+from tkinter.messagebox import NO
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
@@ -11,10 +11,17 @@ from django.conf import settings
 
 # Create your views here.
 def index(request):
+    try:
+        user_id=request.user.id
+        if user_id is not None:
 
-    return render(request, "quizapp/index.html", {
-        'tests': Quiz.objects.filter(user=request.user.id)
-    })
+            q = Quiz.objects.filter(user=user_id)
+            return render(request, "quizapp/index.html", {
+                'tests': q
+            })
+        return render(request, "quizapp/landingpage.html")
+    except:
+        return render(request, "quizapp/landingpage.html")
 
 def login_view(request):
     if request.method == "POST":
@@ -109,11 +116,6 @@ def createtest(request):
                 saved_test = Quiz.objects.filter(user=user, title=title, description=description).first()
                 
                 return HttpResponseRedirect("/tests/" + str(saved_test.id)) 
-                """render(request, "quizapp/test.html", {
-                    'x': saved_test,
-                    'y': saved_test.id,
-                    'z': test.id,
-                }""" 
                 #HttpResponseRedirect("/tests/" + saved_test.id) 
             except IntegrityError:
                 return render(request, "quizapp/createtest.html", {
@@ -171,15 +173,15 @@ def takequiz(request):
             quizid = request.POST["quizid"]
             quiztaker = request.POST["quiztaker"]
             quiz = Quiz.objects.get(id=quizid)
-        except ValueError:
-            return render(request, "quizapp/takequiz.html", {
+        except:
+            return render(request, "quizapp/dne.html", {
                 "message": "Ensure you input the correct Test ID"
             })
         return render(request, "quizapp/quiz.html", {
             "quizid": quizid,
             "quiztaker": quiztaker,
             "questions": Question.objects.filter(quiz=quiz),
-            
+            "test": quiz,
         })
     return render(request, "quizapp/takequiz.html")
 
@@ -197,7 +199,7 @@ def submit(request):
                 rsol = question.answer
                 if str(sol) == str(rsol):
                     score += 1
-                    print(sol, rsol, score)
+                    # print(sol, rsol, score)
             respondance = Respondance.objects.create(quiz=quiz, responder=quiztaker, score=score)
             respondance.save()
         except:
