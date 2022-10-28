@@ -15,12 +15,12 @@ def index(request):
         if user_id is not None:
 
             q = Quiz.objects.filter(user=user_id)
-            return render(request, "quizapp/index.html", {
+            return render(request, "QuizApp/index.html", {
                 'tests': q
             })
-        return render(request, "quizapp/landingpage.html")
+        return render(request, "QuizApp/landingpage.html")
     except:
-        return render(request, "quizapp/landingpage.html")
+        return render(request, "QuizApp/landingpage.html")
 
 def login_view(request):
     if request.method == "POST":
@@ -35,11 +35,11 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "quizapp/login.html", {
+            return render(request, "QuizApp/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "quizapp/login.html")
+        return render(request, "QuizApp/login.html")
 
 def logout_view(request):
     logout(request)
@@ -56,11 +56,11 @@ def register(request):
             password = request.POST["password"]
             confirmation = request.POST["confirmation"]
             if password != confirmation:
-                return render(request, "quizapp/register.html", {
+                return render(request, "QuizApp/register.html", {
                     "message": "Passwords must match."
                 })
             elif len(password) < 8:
-                return render(request, "quizapp/register.html", {
+                return render(request, "QuizApp/register.html", {
                     "message": "Password cannot be less than 8 characters."
                 })
 
@@ -69,17 +69,17 @@ def register(request):
                 user = User.objects.create_user(username, email, password)
                 user.save()
             except IntegrityError:
-                return render(request, "quizapp/register.html", {
+                return render(request, "QuizApp/register.html", {
                     "message": "Username already taken."
                 })
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         except ValueError:
-            return render(request, "quizapp/register.html", {
+            return render(request, "QuizApp/register.html", {
                 "message": "All Field must be set"
             })
     else:
-        return render(request, "quizapp/register.html")
+        return render(request, "QuizApp/register.html")
 
 @login_required(login_url='/login')
 def delete(request, test_id):
@@ -88,7 +88,7 @@ def delete(request, test_id):
         user = User.objects.get(id=request.user.id)
         item = Quiz.objects.filter(user=user, title=test.title)
         item.delete()
-        return render(request, "quizapp/deleted.html", {
+        return render(request, "QuizApp/deleted.html", {
             "test": test
         })
     return HttpResponseRedirect("/tests/" + str(test_id))
@@ -117,14 +117,14 @@ def createtest(request):
                 return HttpResponseRedirect("/tests/" + str(saved_test.id)) 
                 #HttpResponseRedirect("/tests/" + saved_test.id) 
             except IntegrityError:
-                return render(request, "quizapp/createtest.html", {
+                return render(request, "QuizApp/createtest.html", {
                     "message": "Title already exist."
                 })
             
         except ValueError:
             pass
     else:
-        return render(request, "quizapp/createtest.html")
+        return render(request, "QuizApp/createtest.html")
 
 
 @login_required(login_url='/login')
@@ -145,7 +145,7 @@ def tests(request, test_id):
             qstn = Question.objects.create(quiz=quiz, question=question, option_a=option_a, option_b=option_b, option_c=option_c, option_d=option_d)
             qstn.save()
         except ValueError:
-            return render(request, "quizapp/test.html", {
+            return render(request, "QuizApp/test.html", {
                 "test": Quiz.objects.get(id=test_id),
             })
         answer = request.POST["answer"]
@@ -158,7 +158,7 @@ def tests(request, test_id):
         responders = Respondance.objects.filter(quiz=quiz)
         
                
-        return render(request, "quizapp/test.html", {
+        return render(request, "QuizApp/test.html", {
             "questions": questions,
             "test": quiz,
             "noq": availableQuestions,
@@ -173,16 +173,16 @@ def takequiz(request):
             quiztaker = request.POST["quiztaker"]
             quiz = Quiz.objects.get(id=quizid)
         except:
-            return render(request, "quizapp/dne.html", {
+            return render(request, "QuizApp/dne.html", {
                 "message": "Ensure you input the correct Test ID"
             })
-        return render(request, "quizapp/quiz.html", {
+        return render(request, "QuizApp/quiz.html", {
             "quizid": quizid,
             "quiztaker": quiztaker,
             "questions": Question.objects.filter(quiz=quiz),
             "test": quiz,
         })
-    return render(request, "quizapp/takequiz.html")
+    return render(request, "QuizApp/takequiz.html")
 
 
 def submit(request):
@@ -203,7 +203,7 @@ def submit(request):
             respondance.save()
         except:
             return HttpResponseRedirect("/takequiz/")
-        return render(request, "quizapp/complete.html", {
+        return render(request, "QuizApp/complete.html", {
             "name": quiztaker,
 
         })
