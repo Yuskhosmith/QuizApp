@@ -1,4 +1,4 @@
-{% extends "quizapp/layout.html" %}
+{% extends "QuizApp/layout.html" %}
 {%load static%}
 {% block body %}
     <p class="s1">Logged in as, <span>{{user}}</span></p>
@@ -72,5 +72,5 @@
 
 {% endblock %}
 {% block script%}
-    <script type="application/javascript" src="{% static 'quizapp/js/questions.js' %}"></script>
+    <script type="application/javascript" src="{% static 'QuizApp/js/questions.js' %}"></script>
 {% endblock %}
